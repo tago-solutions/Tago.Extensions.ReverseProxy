@@ -1,4 +1,9 @@
-﻿## ConfigureServices(IServiceCollection services)
+﻿
+# Tago - Reverse Proxy
+
+'Tago - Reverse Proxy' is a .net core reverse proxy server acts as an intermediate connection point positioned at a network's edge. It receives initial HTTP connection requests, acting like the actual endpoint. Essentially your network's traffic cop, the reverse proxy serves as a gateway between users and your application origin server.
+
+## ConfigureServices(IServiceCollection services)
 
     IConfigurationSection s = Configuration.GetSection("ProxySettings");
     var ps = new ProxySettings();
