@@ -222,7 +222,7 @@ Defining an http connectors pull for references use
 ### Settings Headers
 
 | Operations |
-||
+|-|
 | Add |
 | AddOrReplace |
 | Remove |
