@@ -102,7 +102,6 @@ Defining an http connectors pull for references use
 
 **CertificateSettings** - certificate location
 
-
 ### Endpoints
     "EndPoints": {
         "/api/test": {        
@@ -216,3 +215,36 @@ Defining an http connectors pull for references use
             }
         }     
     }
+
+
+## Request Manipulation
+
+### Settings Headers
+
+| Operations |
+||
+| Add |
+| AddOrReplace |
+| Remove |
+
+| Sources |
+|-|
+| Const (Default)|
+| Header |
+| Cookie |
+| UserName |
+
+    "Request": {         
+          "Headers": {          
+            "client_id": {
+              "Operation": "AddOrReplace",
+              "Value": "12332132123"
+            },                    
+            "Authorization": {
+              "Operation": "AddOrReplace",
+              "Source": "Cookie", // copy header value from cookie
+              "Value": "X-Authenticate", // cookie key
+            }                   
+        }
+    }
+
