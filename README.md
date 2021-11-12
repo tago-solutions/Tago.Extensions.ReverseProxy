@@ -103,117 +103,235 @@ Defining an http connectors pull for references use
 **CertificateSettings** - certificate location
 
 ### Endpoints
-    "EndPoints": {
-        "/api/test": {        
-            "UpstreamServer": "/anon",
-            "Request": {
-            },
-            "Response": {
-            "CookiesPolicy": {
-                "AdjustCookiesPath": true,
-                "MinimumSameSitePolicy": "None"
-            }, 
-            "Headers": {
-                "client_id": {
-                    "Operation": "AddOrReplace",
-                    "Value": "12332132123"
-                }
-            },  
-            "Cookies": {       
-                "X-Authenticate": {
-                    "Operation": "AddOrReplace",
-                    "Value": "Authorization",
-                    "Source": "ResponseHeader",
-                    "Expiration": "00:02:00",
-                    "HttpOnly": true,
-                    "SameSite": "Unspecified"
-                    }
-                }
-            }
-        },
-        "/api/auth": {       
-            "ConnectorKey": "Local", //connector ref
-            "UpstreamServer": "/auth",
-            "Request": {          
-                "Authentication": {
-                    "Provider": "OAuth",
-                    "Jwt": {
-                        "SigningKey": "A1E06B6586BF5203A7B3EC9C7D4CB53B862E4D19",
-                        "HeaderName": "Authorization",
-                        "HeaderValue": "Bearer {0}"
-                    },
-                    "OAuth": {
-                        "ConnectorKey": "Local", //connector ref
-                        "Url": "/auth/oauth",
-                        "Payload": {
-                            "ClientId": "client-id",
-                            "ClientSecret": "{env: OAUTH_CLIENT_SECRET}",
-                            "GrantType": "grant-type",
-                            "Scope": "bearer"
-                        },
-                        "Response": {
-                            "In": "body"
-                        },
-                        "HeaderKey": "Authorization",
-                        "HeaderValue": "Bearer {0}"
-                    }
-                },
-                "Payload": {
-                    "Digest": {
-                        "DigestOriginal": true,
-                        "HashAlgorithm": "sha512",
-                        "HeaderName": "",
-                        "HeaderValue": ""
-                    },
-                    "Encryption": {
-                        "Provider": "Plugin",
-                        "Jwe": {
-                            "SigningKey": "A1E06B6586BF5203A7B3EC9C7D4CB53B862E4D19"
-                        },
-                        "Plugin": {
-                            "PluginPath": "./SimpleEncryptionPlugin.dll",
-                            "ClassName": "MyIEncryptionHandler"
-                        }
-                    }
-                }
-                //"Headers": {
-                //  "client_id": {
-                //    "Operation": "AddOrReplace",
-                //    "Value": "12332132123"
-                //  },         
-                //  "X-User-Name": {
-                //    "Operation": "AddOrReplace",
-                //    "Source": "UserName"
-                //  },
-                //  "Authorization": {
-                //    "Operation": "AddOrReplace",
-                //    "Source": "Cookie",
-                //    "Value": "X-Authenticate",                
-                //  }
-                //},
-                //"Cookies": {
-                //  "X-Authenticate": {
-                //    "Operation": "Remove"
-                //  }
-                //},
-            },
-            "Response": {
-                "CookiesPolicy": {
-                    "AdjustCookiesPath": true,
-                    "MinimumSameSitePolicy": "None"
-                },
-                "Cookies": {
-                    "X-Authenticate": {
-                    "Operation": "AddOrReplace",
-                    "Value": "Authorization",
-                    "Source": "ResponseHeader",
-                    "Expiration": "00:02:00",
-                    "HttpOnly": true,
-                    "SameSite": "Unspecified"
-                    }
-                }
-            }
-        }     
+	"EndPoints": {
+		"/api/test": {        
+			"UpstreamServer": "/anon",
+			"Request": {
+			},
+			"Response": {
+			"CookiesPolicy": {
+				"AdjustCookiesPath": true,
+				"MinimumSameSitePolicy": "None"
+			}, 
+			"Headers": {
+				"client_id": {
+					"Operation": "AddOrReplace",
+					"Value": "12332132123"
+				}
+			},  
+			"Cookies": {       
+				"X-Authenticate": {
+					"Operation": "AddOrReplace",
+					"Value": "Authorization",
+					"Source": "ResponseHeader",
+					"Expiration": "00:02:00",
+					"HttpOnly": true,
+					"SameSite": "Unspecified"
+					}
+				}
+			}
+		},
+		"/api/oauth": {
+			"routes": {
+				"enforce": true,
+				"items": [
+				{
+					"templates": [ "{path?}/get1/{itemid?}", "{path?}/items/{itemid?}" ],
+					"verbs": [ "*" ]
+				}
+				]
+			},
+			//"UseAuthorization": true,       
+			"ConnectorKey": "Local",
+			"UpstreamServer": "/auth",
+			"Request": {         
+				"Authentication": {
+					"Provider": "OAuth",
+					"OAuth": {
+						"ConnectorKey": "Local",
+						"Url": "/auth/oauth",
+						"Headers": {
+						"client_id": {
+							"Operation": "AddOrReplace",
+							"Value": "12332132123"
+						},
+						"X-User-Name": {
+							"Operation": "AddOrReplace",
+							"Source": "UserName"
+						},
+						"X-TRANSACTION-ID": {
+							"Operation": "AddOrReplace",
+							"Source": "Cookie",
+							"Value": "X-TRANSACTION-ID",
+							"EmptyPolicy": null,
+							"DefaultValue": "{\"user\": \"{{username}}\", \"remoteip\": \"{{ remoteip }}\"}"
+
+						},
+						"X-UUID-ID": {
+							"Operation": "AddOrReplace",
+							"Source": "Header",
+							"Value": "X-UUID-ID",
+							"EmptyPolicy": null,
+							"DefaultValue": "{{uuid}}"
+
+						},
+						"ITEM-ID": {
+							"Operation": "AddOrReplace",
+							"EmptyPolicy": null,
+							"DefaultValue": "{{$uri.itemId}}"
+
+						},
+						"body-sample": {
+							"Operation": "AddOrReplace",
+							"EmptyPolicy": null,
+							"DefaultValue": "{{$body.test}}"
+						}
+						},
+						"Payload": {
+						"ClientId": "client-id",
+						"ClientSecret": "{env: OAUTH_CLIENT_SECRET}",
+						"GrantType": "grant-type",
+						"Scope": "bearer"
+						},            
+						"ResultObjectKey": "$oauth.",
+						"MapTo": {
+							"Headers": {
+								"Authorization": {
+								"Value": "{{$oauth.Scope}} {{$oauth.AccessToken}}"
+								}
+							}
+						}
+					}            
+				},
+				"Payload": {
+				"Digest": {
+					"DigestOriginal": true,
+					"HashAlgorithm": "sha512",
+					"HeaderName": "",
+					"HeaderValue": ""
+				},
+				"Encryption": {
+					"Provider": "Jwe",
+					"Jwe": {
+						"SigningKey": "oauth"
+					},
+					"Plugin": {
+						"PluginPath": "./SimpleEncryptionPlugin.dll",
+						"ClassName": "MyIEncryptionHandler"
+					}
+				}
+				},
+				"Headers": {
+					"body-sample": {
+					"Operation": "AddOrReplace",
+					"EmptyPolicy": null,
+					"DefaultValue": "{{$body.test}}"
+				}            
+				}
+
+			},
+			"Response": {
+				"CookiesPolicy": {
+					"AdjustCookiesPath": true,
+					"MinimumSameSitePolicy": "None"
+				},
+				"Cookies": {
+					"X-Authenticate": {
+						"Operation": "AddOrReplace",
+						"Value": "Authorization",
+						"Source": "ResponseHeader",
+						"Expiration": "00:02:00",
+						"HttpOnly": true,
+						"SameSite": "Unspecified"
+					},
+					"X-Item": {
+						"Operation": "AddOrReplace",
+						"Value": "{{$body.test}}",
+						//"Source": "ResponseHeader",
+						"Expiration": "00:02:00",
+						"HttpOnly": true,
+						"SameSite": "Unspecified"
+					}
+				}
+			}
+		  },
+		  "/api/jwt": {
+			"routes": {
+			  "enforce": true,
+			  "items": [
+				{
+				  "templates": [ "{path?}/get1/{itemid?}", "{path?}/items/{itemid?}" ],
+				  "verbs": [ "*" ]
+				}
+			  ]
+			},
+			//"UseAuthorization": true,        
+			"ConnectorKey": "Local",
+			"UpstreamServer": "/auth",
+			"Request": {          
+			  "Authentication": {
+					"Provider": "Jwt",
+					"Jwt": {
+						"SigningKey": "A1E06B6586BF5203A7B3EC9C7D4CB53B862E4D19_1_1",
+						"HeaderName": "Authorization",
+						"HeaderValue": "Bearer {0}",
+						"Claims": {
+							"orig-user-name": "{{username}}"
+							"json-test": {
+								"body": "test"
+							}
+						}
+					}            
+			  },          
+			  "Headers": {
+				//"body-sample": {
+				//  "Operation": "AddOrReplace",
+				//  "EmptyPolicy": null,
+				//  "DefaultValue": "{{$body.test}}"
+				//}
+				//  "client_id": {
+				//    "Operation": "AddOrReplace",
+				//    "Value": "12332132123"
+				//  },
+				//  "Authorization": {
+				//    "Operation": "AddOrReplace",
+				//    "Source": "Cookie",
+				//    "Value": "X-Authenticate",
+				//    "EmptyPolicy": null
+				//  }
+				//},
+				//"Cookies": {
+				//  "X-Authenticate": {
+				//    "Operation": "Remove"
+				//  }
+			  }
+
+			},
+			"Response": {
+				"CookiesPolicy": {
+					"AdjustCookiesPath": true,
+					"MinimumSameSitePolicy": "None"
+				},
+				"Cookies": {
+					"X-Authenticate": {
+						"Operation": "AddOrReplace",
+						"Value": "Authorization",
+						"Source": "ResponseHeader",
+						"Expiration": "00:02:00",
+						"HttpOnly": true,
+						"SameSite": "Unspecified"
+					},
+					"X-Item": {
+						"Operation": "AddOrReplace",
+						"Value": "{{$body.test}}",
+						//"Source": "ResponseHeader",
+						"Expiration": "00:02:00",
+						"HttpOnly": true,
+						"SameSite": "Unspecified"
+					}
+				}
+			}
+		}
     }
 
 

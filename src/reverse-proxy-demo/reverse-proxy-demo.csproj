@@ -29,13 +29,13 @@
 
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
-    <PackageReference Include="Tago.Extensions.Configuration.Encryption" Version="3.1.0-preview-12" />
-    <PackageReference Include="Tago.Extensions.Jwt" Version="3.1.1-preview-20210825-02" />
+    <PackageReference Include="Tago.Extensions.Configuration.Encryption" Version="3.1.0-preview-12" />    
     <PackageReference Include="Tago.Extensions.Logging.File" Version="3.1.0-preview-05" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\..\TAGO_TFS\TAGO\TAGO_Git\Infra\Tago.Extensions.HttpClient\Tago.Extensions.ReverseProxy\Tago.Extensions.ReverseProxy.csproj" />
+    <ProjectReference Include="..\..\..\..\..\TAGO_TFS\TAGO\TAGO_Git\Infra\Tago.Extensions.Jwt\Tago.Extensions.Jwt\Tago.Extensions.Jwt.csproj" />
   </ItemGroup>
 
   <ItemGroup>
