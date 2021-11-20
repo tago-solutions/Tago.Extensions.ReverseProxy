@@ -12,44 +12,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\Extensions.cs" />
-    <Compile Remove="Controllers\MyCookie.cs" />
-    <Compile Remove="Controllers\ProxyHttpService.cs" />
-    <Compile Remove="Controllers\ProxyMiddleware.cs" />
-    <Compile Remove="Controllers\ProxyResult.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Remove="Certs\2405.NTAS107705T67.udkq401%40hq.il.tleumi.pfx.txt" />
-    <None Remove="Certs\cert.pem" />
-    <None Remove="Certs\key.pem" />
-    <None Remove="Certs\New Text Document.txt" />
-    <None Remove="__web.config__" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
-    <PackageReference Include="Tago.Extensions.Configuration.Encryption" Version="3.1.0-preview-12" />    
-    <PackageReference Include="Tago.Extensions.Logging.File" Version="3.1.0-preview-05" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\TAGO_TFS\TAGO\TAGO_Git\Infra\Tago.Extensions.HttpClient\Tago.Extensions.ReverseProxy\Tago.Extensions.ReverseProxy.csproj" />
-    <ProjectReference Include="..\..\..\..\..\TAGO_TFS\TAGO\TAGO_Git\Infra\Tago.Extensions.Jwt\Tago.Extensions.Jwt\Tago.Extensions.Jwt.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Certs\2405.NTAS107705T67.udkq401%40hq.il.tleumi.pfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Certs\private.pfx">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
-  <!--<ItemGroup>    
-    <PackageReference Include="Tago.Extensions.HttpClient" Version="3.1.0-preview-20" />
-  </ItemGroup>-->  
-
-
+    <PackageReference Include="Tago.Extensions.Configuration.Encryption" Version="3.1.0-preview-12" />
+    <PackageReference Include="Tago.Extensions.Jwt" Version="3.1.1-preview-20211118-01" />    
+    <PackageReference Include="Tago.Extensions.Logging.File" Version="3.1.0-preview-05" />    
+    <PackageReference Include="Tago.Extensions.ReverseProxy" Version="3.1.1-preview-20211118-01" />
+  </ItemGroup>  
 </Project>

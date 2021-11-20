@@ -32,7 +32,7 @@ namespace Tago.Infra.Proxy
                     webBuilder.AddEncryptedJsonFile();
 
                     webBuilder.UseStartup<Startup>();
-                    webBuilder.UseKestrel();
+                    //webBuilder.UseKestrel();
                 });
     }
 }

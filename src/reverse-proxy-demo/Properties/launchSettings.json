@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "http://localhost/reverse-proxy-demo",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:56849",
       "sslPort": 0
@@ -12,7 +16,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "api/auth",
+      "launchUrl": "api/mock",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,7 +24,7 @@
     "Tago.Infra.Proxy": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "api/auth/get1",
+      "launchUrl": "api/mock",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
         "OAUTH_CLIENT_SECRET": "secret"

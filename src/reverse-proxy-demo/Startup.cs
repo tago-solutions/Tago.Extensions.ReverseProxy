@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -6,7 +7,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System;
 using System.Collections.Generic;
 using Tago.Extensions.Http;
 using Tago.Extensions.ReverseProxy;
@@ -14,6 +14,7 @@ using Tago.Extensions.ReverseProxy.Settings;
 
 namespace Tago.Infra.Proxy
 {
+
     public class Startup
     {
         private ProxySettings settings = new ProxySettings();
@@ -32,15 +33,24 @@ namespace Tago.Infra.Proxy
             s.Bind(settings);
             
             /***************************************************/
-            services.AddProxy().AddPlugins(settings).AddHttpConnectors(settings);            
+            var pb = services.AddProxy().AddPlugins(settings).AddHttpConnectors(settings);
+            pb.AddAuthentication()
+                //.AddProvider("test", new TestTokenValidatorProvider())
+                .AddProvider("jwt", new JwtTokenValidatorProvider())
+                ;
             /***************************************************/
 
             services.AddJwtSigner(opts=> {
                 opts.Configure(Configuration.GetSection("JwtSigner"));
             });
-            services.AddJwt(opts => {
-                opts.Configure(Configuration.GetSection("JwtSettings"));
-            });
+            //services.AddJwt(opts => {
+            //    opts.Configure(Configuration.GetSection("JwtSettings"));
+            //});
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+               //.AddJwt(opts => opts.Configure(Configuration.GetSection("JwtSigner")))
+               //.AddCustomAuth("test")
+               ;
 
             services.AddSwaggerGen(c =>
             {

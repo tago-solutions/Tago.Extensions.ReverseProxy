@@ -104,30 +104,57 @@ Defining an http connectors pull for references use
 
 ### Endpoints
 	"EndPoints": {
+		"/api/mock": {
+			//"UpstreamServer": "/mock",
+			"Request": {
+			},
+			"Response": {
+				"CookiesPolicy": {
+					"AdjustCookiesPath": true,
+					"MinimumSameSitePolicy": "None"
+				},
+				"Cookies": {
+					"X-Authenticate": {
+						"Operation": "AddOrReplace",
+						"Value": "Authorization",
+						"Source": "ResponseHeader",
+						"Expiration": "00:02:00",
+						"HttpOnly": true,
+						"SameSite": "Unspecified"
+					}
+				},
+				"Content": {
+					"ContentType": "application/json",
+					"Body": {
+						"result": "mock value"
+					}
+				}
+			}
+		},
 		"/api/test": {        
 			"UpstreamServer": "/anon",
 			"Request": {
 			},
 			"Response": {
-			"CookiesPolicy": {
-				"AdjustCookiesPath": true,
-				"MinimumSameSitePolicy": "None"
-			}, 
-			"Headers": {
-				"client_id": {
-					"Operation": "AddOrReplace",
-					"Value": "12332132123"
-				}
-			},  
-			"Cookies": {       
-				"X-Authenticate": {
-					"Operation": "AddOrReplace",
-					"Value": "Authorization",
-					"Source": "ResponseHeader",
-					"Expiration": "00:02:00",
-					"HttpOnly": true,
-					"SameSite": "Unspecified"
+				"CookiesPolicy": {
+					"AdjustCookiesPath": true,
+					"MinimumSameSitePolicy": "None"
+				}, 
+				"Headers": {
+					"client_id": {
+						"Operation": "AddOrReplace",
+						"Value": "12332132123"
 					}
+				},  
+				"Cookies": {       
+					"X-Authenticate": {
+						"Operation": "AddOrReplace",
+						"Value": "Authorization",
+						"Source": "ResponseHeader",
+						"Expiration": "00:02:00",
+						"HttpOnly": true,
+						"SameSite": "Unspecified"
+						}
 				}
 			}
 		},
@@ -144,6 +171,17 @@ Defining an http connectors pull for references use
 			//"UseAuthorization": true,       
 			"ConnectorKey": "Local",
 			"UpstreamServer": "/auth",
+			"authentication": {
+				//"disabled": true,
+				"AuthenticationProviders": [
+				{
+					"provider": "Jwt"
+				},
+				//{
+				//  "provider": "Test"
+				//}
+				]
+			},
 			"Request": {         
 				"Authentication": {
 					"Provider": "OAuth",
