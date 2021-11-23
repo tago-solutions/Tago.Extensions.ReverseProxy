@@ -33,7 +33,7 @@ namespace Tago.Infra.Proxy
             s.Bind(settings);
             
             /***************************************************/
-            var pb = services.AddProxy().AddPlugins(settings).AddHttpConnectors(settings);
+            var pb = services.AddProxy(s).AddPlugins().AddHttpConnectors();
             pb.AddAuthentication()
                 //.AddProvider("test", new TestTokenValidatorProvider())
                 .AddProvider("jwt", new JwtTokenValidatorProvider())
