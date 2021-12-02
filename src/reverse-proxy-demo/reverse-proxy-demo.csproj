@@ -14,8 +14,8 @@
   <ItemGroup>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.5" />
     <PackageReference Include="Tago.Extensions.Configuration.Encryption" Version="3.1.0-preview-12" />
-    <PackageReference Include="Tago.Extensions.Jwt" Version="3.1.1-preview-20211118-01" />    
-    <PackageReference Include="Tago.Extensions.Logging.File" Version="3.1.0-preview-05" />    
-    <PackageReference Include="Tago.Extensions.ReverseProxy" Version="3.1.1-preview-20211122-02" />
+    <PackageReference Include="Tago.Extensions.Jwt" Version="3.1.1-preview-20211128-01" />    
+    <PackageReference Include="Tago.Extensions.Logging.File" Version="3.1.1-preview-20201104-02" />    
+    <PackageReference Include="Tago.Extensions.ReverseProxy" Version="3.1.1-preview-20211128-01" />
   </ItemGroup>  
 </Project>

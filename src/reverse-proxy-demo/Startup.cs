@@ -29,11 +29,10 @@ namespace Tago.Infra.Proxy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            IConfigurationSection s = Configuration.GetSection("ProxySettings");            
-            s.Bind(settings);
+           
             
             /***************************************************/
-            var pb = services.AddProxy(s).AddPlugins().AddHttpConnectors();
+            var pb = services.AddProxy(Configuration, "ProxySettings").AddPlugins().AddHttpConnectors();
             pb.AddAuthentication()
                 //.AddProvider("test", new TestTokenValidatorProvider())
                 .AddProvider("jwt", new JwtTokenValidatorProvider())
@@ -94,7 +93,10 @@ namespace Tago.Infra.Proxy
 
             app.UseRouting();
             //app.UseCookiePolicy();
-            
+
+            IConfigurationSection s = Configuration.GetSection("ProxySettings");
+            s.Bind(settings);
+
             app.RunProxy(settings, 
                 
                 hooks=> {
