@@ -32,11 +32,11 @@ namespace Tago.Infra.Proxy
            
             
             /***************************************************/
-            var pb = services.AddProxy(Configuration, "ProxySettings").AddPlugins().AddHttpConnectors();
-            pb.AddAuthentication()
-                //.AddProvider("test", new TestTokenValidatorProvider())
-                .AddProvider("jwt", new JwtTokenValidatorProvider())
-                ;
+            var pb = services.AddProxy(Configuration, "ProxySettings");
+            //pb.AddAuthentication()
+            //    //.AddProvider("test", new TestTokenValidatorProvider())
+            //    .AddProvider("jwt", new JwtTokenValidatorProvider())
+            //    ;
             /***************************************************/
 
             services.AddJwtSigner(opts=> {
@@ -97,8 +97,7 @@ namespace Tago.Infra.Proxy
             IConfigurationSection s = Configuration.GetSection("ProxySettings");
             s.Bind(settings);
 
-            app.RunProxy(settings, 
-                
+            app.RunProxy(
                 hooks=> {
 
                     hooks.OnStatusResult(401, async (response, request, resender) =>
@@ -119,13 +118,13 @@ namespace Tago.Infra.Proxy
                         return null;
                     };
 
-                    hooks.BeforeSend = (ctx, request) =>
-                    {
-                        //var f = ctx.ServiceProvider.GetService<IHttpClientHandlerFactory>();
+                    //hooks.BeforeSend = (ctx, request) =>
+                    //{
+                    //    //var f = ctx.ServiceProvider.GetService<IHttpClientHandlerFactory>();
 
-                        //request.Headers.TryAddWithoutValidation("user_name", ctx?.HttpContext.User?.Identity?.Name);
-                        //return ctx;
-                    };
+                    //    //request.Headers.TryAddWithoutValidation("user_name", ctx?.HttpContext.User?.Identity?.Name);
+                    //    //return ctx;
+                    //};
 
                     hooks.BeforeResponse = (ctx, routePath, setting) =>
                     {

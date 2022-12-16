@@ -25,7 +25,11 @@ namespace Tago.Infra.Proxy
                         builder.AddDebug();
                         builder.AddFile(opts =>
                         {
-                            opts.FileName = "reverse-proxy.Log";
+                            opts.Configure(c => {
+                                c.FileName = "reverse-proxy.Log";
+                            });
+                            
+                            
                         });
                     });
 
