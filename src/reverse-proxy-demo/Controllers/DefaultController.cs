@@ -17,9 +17,9 @@ namespace cookies_backend.Controllers
     {
        
         private readonly ILogger<DefaultController> _logger;
-        private readonly IRestHttpClientFactory restHttpClientFactory;
+        private readonly IRestClientFactory restHttpClientFactory;
 
-        public DefaultController(ILogger<DefaultController> logger, IRestHttpClientFactory restHttpClientFactory)
+        public DefaultController(ILogger<DefaultController> logger, IRestClientFactory restHttpClientFactory)
         {
             _logger = logger;
             this.restHttpClientFactory = restHttpClientFactory;

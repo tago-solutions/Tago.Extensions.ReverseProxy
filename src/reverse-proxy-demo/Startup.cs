@@ -17,7 +17,7 @@ namespace Tago.Infra.Proxy
 
     public class Startup
     {
-        private ProxySettings settings = new ProxySettings();
+        private ReverseProxySettings settings = new ReverseProxySettings();
 
         public Startup(IConfiguration configuration)
         {

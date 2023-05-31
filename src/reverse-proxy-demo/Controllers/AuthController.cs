@@ -21,10 +21,10 @@ namespace cookies_backend.Controllers
     {
        
         private readonly ILogger<AuthController> _logger;
-        private readonly IRestHttpClientFactory restHttpClientFactory;
+        private readonly IRestClientFactory restHttpClientFactory;
         private readonly ITokenGenerator tokenGenerator;
 
-        public AuthController(ILogger<AuthController> logger, IRestHttpClientFactory restHttpClientFactory, Tago.Extensions.Jwt.Abstractions.Interfaces.ITokenGenerator tokenGenerator)
+        public AuthController(ILogger<AuthController> logger, IRestClientFactory restHttpClientFactory, ITokenGenerator tokenGenerator)
         {
             _logger = logger;
             this.restHttpClientFactory = restHttpClientFactory;
