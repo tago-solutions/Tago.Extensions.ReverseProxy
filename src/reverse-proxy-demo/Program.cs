@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Tago.Extensions.Configuration;
@@ -21,15 +16,17 @@ namespace Tago.Infra.Proxy
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.ConfigureLogging(builder => {
+                    webBuilder.ConfigureLogging(builder =>
+                    {
                         builder.AddDebug();
                         builder.AddFile(opts =>
                         {
-                            opts.Configure(c => {
+                            opts.Configure(c =>
+                            {
                                 c.FileName = "reverse-proxy.Log";
                             });
-                            
-                            
+
+
                         });
                     });
 

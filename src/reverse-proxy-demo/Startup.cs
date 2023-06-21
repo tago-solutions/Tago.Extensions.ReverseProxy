@@ -1,15 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Server.IISIntegration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Collections.Generic;
-using Tago.Extensions.Http;
-using Tago.Extensions.ReverseProxy;
 using Tago.Extensions.ReverseProxy.Settings;
 
 namespace Tago.Infra.Proxy
@@ -29,13 +24,14 @@ namespace Tago.Infra.Proxy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-           
-            
+
+
             /***************************************************/
-            var pb = services.AddProxy(Configuration, "ProxySettings");           
+            var pb = services.AddProxy(Configuration, "ProxySettings");
             /***************************************************/
 
-            services.AddJwtSigner(opts=> {
+            services.AddJwtSigner(opts =>
+            {
                 opts.Configure(Configuration.GetSection("JwtSigner"));
             });
             //services.AddJwt(opts => {
@@ -76,7 +72,8 @@ namespace Tago.Infra.Proxy
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseSwagger(c => {
+            app.UseSwagger(c =>
+            {
                 //c.RouteTemplate = "swagger/{documentName}/swagger.json";
             });
             app.UseSwaggerUI(c =>
@@ -94,7 +91,8 @@ namespace Tago.Infra.Proxy
             s.Bind(settings);
 
             app.RunProxy(
-                hooks=> {
+                hooks =>
+                {
 
                     hooks.OnStatusResult(401, async (response, request, resender) =>
                     {
@@ -108,9 +106,10 @@ namespace Tago.Infra.Proxy
                             return response;
                         }
                     });
-                    
 
-                    hooks.SetCertificatesAsync = async (ctx, ep) => {
+
+                    hooks.SetCertificatesAsync = async (ctx, ep) =>
+                    {
                         return null;
                     };
 
@@ -129,20 +128,20 @@ namespace Tago.Infra.Proxy
                         //    Path = routePath
                         //});                        
                     };
-            });
-           
+                });
+
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
 
             app.UseEndpoints(endpoints =>
-            {                
+            {
                 endpoints.MapControllers();
             });
         }
 
 
-        
+
     }
 }

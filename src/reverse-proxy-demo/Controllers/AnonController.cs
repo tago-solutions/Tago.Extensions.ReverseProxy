@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Tago.Extensions.Http;
 
 namespace cookies_backend.Controllers
 {
@@ -16,7 +10,7 @@ namespace cookies_backend.Controllers
     [ApiExplorerSettings(GroupName = "v1")]
     public class AnonController : ControllerBase
     {
-       
+
         private readonly ILogger<AnonController> _logger;
 
         public AnonController(ILogger<AnonController> logger)

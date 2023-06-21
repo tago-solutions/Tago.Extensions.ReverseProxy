@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Tago.Extensions.Http;
 using Tago.Extensions.Jwt.Abstractions.Interfaces;
 
@@ -19,7 +18,7 @@ namespace cookies_backend.Controllers
     [ApiExplorerSettings(GroupName = "auth")]
     public class AuthController : ControllerBase
     {
-       
+
         private readonly ILogger<AuthController> _logger;
         private readonly IRestClientFactory restHttpClientFactory;
         private readonly ITokenGenerator tokenGenerator;
@@ -32,7 +31,7 @@ namespace cookies_backend.Controllers
         }
 
         [Authorize]
-        [HttpGet]       
+        [HttpGet]
         public string Get()
         {
             return "Hi from authorized method";
@@ -50,12 +49,12 @@ namespace cookies_backend.Controllers
         [HttpPost]
         public async Task<ActionResult> Post()
         {
-            using(var sr = new StreamReader(Request.Body))
+            using (var sr = new StreamReader(Request.Body))
             {
                 var res = await sr.ReadToEndAsync();
 
-                return Ok(new { payload = res, headers = Request.Headers.ToDictionary((k)=> k.Key, v=> v.Value)});
-            }            
+                return Ok(new { payload = res, headers = Request.Headers.ToDictionary((k) => k.Key, v => v.Value) });
+            }
         }
 
         [AllowAnonymous]
@@ -131,7 +130,7 @@ namespace cookies_backend.Controllers
     public class MyRequest
     {
         [Required]
-        [FromHeader(Name ="header-1")]
+        [FromHeader(Name = "header-1")]
         public string Header1 { get; set; }
 
 

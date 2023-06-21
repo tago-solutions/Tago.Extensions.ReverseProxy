@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Tago.Extensions.Http;
@@ -15,7 +11,7 @@ namespace cookies_backend.Controllers
     [ApiExplorerSettings(GroupName = "v1")]
     public class DefaultController : ControllerBase
     {
-       
+
         private readonly ILogger<DefaultController> _logger;
         private readonly IRestClientFactory restHttpClientFactory;
 
@@ -25,9 +21,9 @@ namespace cookies_backend.Controllers
             this.restHttpClientFactory = restHttpClientFactory;
         }
 
-        [HttpGet]       
+        [HttpGet]
         public string Get()
-        {  
+        {
             return "Hi there!";
         }
 
@@ -38,7 +34,7 @@ namespace cookies_backend.Controllers
 
 
         [AllowAnonymous]
-        [HttpGet("test")]       
+        [HttpGet("test")]
         public string GetTest([FromBody] Test model)
         {
             return "Hi there!";
